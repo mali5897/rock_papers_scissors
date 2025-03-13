@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron&family=Press+Start+2P&display=swap');
+        body {
+            background-color: black;
+            color: red;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .landing-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('free-palestine.png') no-repeat center center/cover;
+            position: relative;
+        }
+        .game-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px;
+        }
+        .choice {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border: 2px solid green;
+        }
+        .choice img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+        }
+        .result {
+            font-size: 24px;
+            margin-top: 20px;
+            font-family: 'Press Start 2P', cursive;
+        }
+        .restart-btn {
+            background-color: green;
+            color: red;
+            font-size: 20px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .prompt-container {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+        }
+        .prompt-buttons button {
+            background-color: green;
+            color: red;
+            font-size: 18px;
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        .free-palestine {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 30px;
+            font-family: 'Press Start 2P', cursive;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="landing-container" id="landing">
+        <div class="free-palestine">FREE PALESTINE</div>
+        <div class="prompt-container">
+            <h1>Do you want to play Rock Paper Scissors?</h1>
+            <div class="prompt-buttons">
+                <button onclick="startGame()">Yes</button>
+                <button onclick="exitGame()">No</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="game-container" id="game">
+        <h1>Rock Paper Scissors</h1>
+        <div class="choices">
+            <div class="choice" id="player-choice">
+                <img src="" id="player-img" alt="Your Choice">
+            </div>
+            <div class="choice" id="computer-choice">
+                <img src="" id="computer-img" alt="Computer Choice">
+            </div>
+        </div>
+        <div class="result" id="result">Choose your move</div>
+        <button class="restart-btn" onclick="restartGame()">Restart Game</button>
+    </div>
+
+    <script>
+        function startGame() {
+            let userInput;
+            while (true) {
+                userInput = prompt("Enter Rock, Paper, or Scissors:").toLowerCase();
+                if (['rock', 'paper', 'scissors'].includes(userInput)) break;
+                alert("Invalid input. Please enter Rock, Paper, or Scissors.");
+            }
+            document.getElementById("landing").style.display = "none";
+            document.getElementById("game").style.display = "flex";
+            playGame(userInput);
+        }
+
+        function exitGame() {
+            alert("Maybe next time!");
+        }
+
+        function playGame(playerChoice) {
+            const choices = ['rock', 'paper', 'scissors'];
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+            let result = '';
+
+            if (playerChoice === computerChoice) {
+                result = "It's a tie!";
+            } else if (
+                (playerChoice === 'rock' && computerChoice === 'scissors') ||
+                (playerChoice === 'paper' && computerChoice === 'rock') ||
+                (playerChoice === 'scissors' && computerChoice === 'paper')
+            ) {
+                result = 'You win!';
+            } else {
+                result = 'Computer wins!';
+            }
+            
+            document.getElementById('player-img').src = `${playerChoice}.png`;
+            document.getElementById('computer-img').src = `${computerChoice}.png`;
+            document.getElementById('result').innerText = `You chose ${playerChoice}, Computer chose ${computerChoice}. ${result}`;
+        }
+
+        function restartGame() {
+            document.getElementById("game").style.display = "none";
+            document.getElementById("landing").style.display = "flex";
+        }
+    </script>
+</body>
+</html>
+
